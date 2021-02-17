@@ -1,8 +1,8 @@
-# Getting Started with Create React App
+# GDevelop Project Manager (in Development)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A project manager for projects made in [gdevelop5](https://github.com/4ian/GDevelop)
 
-## Available Scripts
+## Available Scripts for Development
 
 In the project directory, you can run:
 
