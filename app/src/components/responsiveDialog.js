@@ -8,11 +8,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
-export default function ResponsiveDialog() {
+
+
+
+export default function ResponsiveDialog(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const {clickOpen} = props;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,12 +31,12 @@ export default function ResponsiveDialog() {
       </Button>
       <Dialog
         fullScreen={fullScreen}
-        open={open}
+        open={clickOpen}
         onClose={handleClose}
         disableBackdropClick='true'
-        aria-labelledby="responsive-dialog-title"
+        aria-labelledby="responsive-dialog"
       >
-        <DialogTitle id="responsive-dialog-title">{"Game Properties"}</DialogTitle>
+        <DialogTitle id="responsive-dialog">{"Game Properties"}</DialogTitle>
         <DialogContent>
           <Input />
         </DialogContent>

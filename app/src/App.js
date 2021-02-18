@@ -1,14 +1,13 @@
-import { Button } from '@material-ui/core';
-import ResponsiveDialog from './components/responsiveDialog';
-import ButtonAppBar from './components/appHeader';
 import './App.css';
+import Header from './components/header';
+import Home from './pages/home.js';
 
 function App() {
   return (
     <div className="App">
-      <ButtonAppBar />
-      <ResponsiveDialog />
-      <Button color="primary">Primary</Button>
+      <Header />
+
+      <Home />
       
     </div>
   );

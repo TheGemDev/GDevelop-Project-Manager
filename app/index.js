@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require('electron')
+const { app, BrowserWindow, Menu, shell  } = require('electron')
 const fs = require('fs')
 
 //get path to documents folder
