@@ -1,8 +1,8 @@
-const { app, BrowserWindow, Menu, shell  } = require('electron')
+const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer } = require('electron')
 const fs = require('fs')
-
-//get path to documents folder
-var path = app.getPath('documents')
+const path = require("path");
+//get projectsPath to documents folder
+var projectsPath = app.getPath('documents')
 
 const isMac = process.platform === 'darwin'
 function createWindow () {
@@ -11,13 +11,14 @@ function createWindow () {
     width: 1050,
     height: 650,
     minWidth: 800,
-    minHeight:450,
-    
+    minHeight: 450,
+
     webPreferences: {
       nodeIntegration: true,
-      
-    }
-  })
+      enableRemoteModule: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
 
   win.loadURL('http://localhost:3000')
 }
@@ -50,8 +51,8 @@ const template = [
       label: 'Open Projects',
       click: () => {
           
-          if (fs.existsSync(path + '/GDevelop projects')) {
-            shell.openPath(path + '/GDevelop projects')
+          if (fs.existsSync(projectsPath + '/GDevelop projects')) {
+            shell.openPath(projectsPath + '/GDevelop projects')
           } else { //
             const Alert = require("electron-alert");
 

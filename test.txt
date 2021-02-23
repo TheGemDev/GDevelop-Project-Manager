@@ -1,0 +1,3 @@
+ipcMain, ipcRenderer 
+
+window.electron = require("electron");
