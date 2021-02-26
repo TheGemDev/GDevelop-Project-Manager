@@ -1,127 +1,163 @@
-const { app, BrowserWindow, Menu, shell  } = require('electron')
-const fs = require('fs')
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  shell,
+  ipcMain,
+  ipcRenderer,
+  dialog,
+} = require("electron");
+const { is } = require("electron-util");
+const fs = require("fs");
+const path = require("path");
 
-//get path to documents folder
-var path = app.getPath('documents')
+//get projectsPath to documents folder
+var documentsDir = app.getPath("documents");
 
-const isMac = process.platform === 'darwin'
-function createWindow () {
+const isMac = process.platform === "darwin";
+
+function createWindow() {
   const win = new BrowserWindow({
     title: "GDevelop Project Manager",
     width: 1050,
     height: 650,
     minWidth: 800,
-    minHeight:450,
-    
+    minHeight: 450,
+
     webPreferences: {
+      devTools: is.development,
       nodeIntegration: true,
-      
-    }
-  })
+      enableRemoteModule: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
 
-  win.loadURL('http://localhost:3000')
+  win.loadURL("http://localhost:3000");
 }
-
-
 //menu
+let options = {};
+options.buttons = ["Yes", "No"];
+options.message =
+  "'GDevelop projects' folder does not exist in your documents directory!";
+options.title = "Warning";
+options.defaultId = 1;
+options.type = "warning";
+options.detail = "Would you like to create it now?";
+options.cancelId = 1;
+options.defaultId = 0;
+options.noLink = false;
+options.normalizeAccessKeys = false;
 
 const template = [
   // { role: 'appMenu' }
-  ...(isMac ? [{
-    label: app.name,
-    submenu: [
-      { role: 'about' },
-      { type: 'separator' },
-      { role: 'services' },
-      { type: 'separator' },
-      { role: 'hide' },
-      { role: 'hideothers' },
-      { role: 'unhide' },
-      { type: 'separator' },
-      { role: 'quit' }
-    ]
-  }] : []),
+  ...(isMac
+    ? [
+        {
+          label: app.name,
+          submenu: [
+            { role: "about" },
+            { type: "separator" },
+            { role: "services" },
+            { type: "separator" },
+            { role: "hide" },
+            { role: "hideothers" },
+            { role: "unhide" },
+            { type: "separator" },
+            { role: "quit" },
+          ],
+        },
+      ]
+    : []),
   // { role: 'fileMenu' }
   {
-    label: 'File',
+    label: "File",
 
     submenu: [
-      { role: 'openProjects',
-      label: 'Open Projects',
-      click: () => {
-          
-          if (fs.existsSync(path + '/GDevelop projects')) {
-            shell.openPath(path + '/GDevelop projects')
-          } else { //
-            const Alert = require("electron-alert");
-
-let alert = new Alert();
-
-let swalOptions = {
-	title: "Folder not found!",
-	text: "Please ensure you have a 'GDevelop projects' folder in your documents directory",
-	type: "error",
-	showCancelButton: false
-};
-
-alert.fireWithFrame(swalOptions, null, true, true, null,);
-          }
-      }  
-    },
-        {role: 'openGDevelop',
-        label : 'Open GDevelop',
+      {
+        role: "openProjects",
+        label: "Open Projects",
         click: () => {
-            //
-        }
+          if (fs.existsSync(documentsDir + "/GDevelop projects")) {
+            shell.openPath(documentsDir + "/GDevelop projects");
+          } else {
+            dialog
+              .showMessageBox(BrowserWindow.getFocusedWindow(), options)
+              .then((res) => {
+                if (res.response === 0) {
+                  fs.mkdir(
+                    path.join(documentsDir, "GDevelop projects"),
+                    (err) => {
+                      if (err) {
+                        return console.error(err);
+                      }
+                      // <Alert
+                      //text= "Yes"
+                      ///>
+                      console.log("GDevelop projects created successfully!");
+                    }
+                  );
+                  console.log("Button Clicked 'Yes'");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         },
-      isMac ? { role: 'close' } : { role: 'Quit' }
-    ]
+      },
+      {
+        role: "openGDevelop",
+        label: "Open GDevelop",
+        click: () => {
+          //
+        },
+      },
+      isMac ? { role: "close" } : { role: "Quit" },
+    ],
   },
   // { role: 'viewMenu' }
+
   {
-    label: 'View',
+    label: "View",
     submenu: [
-      { role: 'forceReload' },
-      { role: 'toggleDevTools' },
-      { type: 'separator' },
-      { role: 'togglefullscreen' }
-    ]
+      { role: "forceReload" },
+      { role: "toggleDevTools" },
+      { type: "separator" },
+      { role: "togglefullscreen" },
+    ],
   },
   // { role: 'windowMenu' }
   {
-    label: 'Window',
-    submenu: [
-      { role: 'minimize' },
-      { role: 'close' }
-    ]
+    label: "Window",
+    submenu: [{ role: "minimize" }, { role: "close" }],
   },
   {
-    role: 'help',
+    role: "help",
     submenu: [
       {
-        label: 'About',
+        label: "About",
         click: async () => {
-          const { shell } = require('electron')
-          await shell.openExternal('https://www.gdevelop-app.com')
-        }
-      }
-    ]
+          const { shell } = require("electron");
+          await shell.openExternal("https://www.gdevelop-app.com");
+        },
+      },
+    ],
+  },
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+app.whenReady().then(createWindow);
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
-]
+});
 
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
-
-app.whenReady().then(createWindow)
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', () => {
+app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createWindow();
   }
-})
+});
