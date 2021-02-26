@@ -4,4 +4,6 @@ orbs:
 workflows:
   node-tests:
     jobs:
-      - node/test
+      - run:
+          name: Install Wine for Electron builder
+          command: sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt install wine32
