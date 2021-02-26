@@ -23,6 +23,7 @@ function createWindow() {
     height: 650,
     minWidth: 800,
     minHeight: 450,
+    backgroundColor: "#f3f2ef",
 
     webPreferences: {
       devTools: is.development,
@@ -75,7 +76,7 @@ const template = [
     submenu: [
       {
         role: "openProjects",
-        label: "Open Projects",
+        label: "Open Projects...",
         click: () => {
           if (fs.existsSync(documentsDir + "/GDevelop projects")) {
             shell.openPath(documentsDir + "/GDevelop projects");

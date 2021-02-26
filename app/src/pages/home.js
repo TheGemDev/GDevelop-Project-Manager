@@ -3,7 +3,9 @@ import PageHeader from "../components/pageHeader";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import optionalRequire from "../util/OptionalRequire";
 import ErrorIcon from "@material-ui/icons/Error";
-//import Alert from "../components/lab/alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import Fade from "@material-ui/core/Fade";
+import Slide from "@material-ui/core/Slide";
 
 const electron = optionalRequire("electron");
 const app = electron ? electron.remote.app : null;
@@ -27,9 +29,13 @@ options.normalizeAccessKeys = false;
 
 let WIN = electron ? electron.remote.getCurrentWindow() : null;
 
+
+
 if (fs.existsSync(documentsDir + "/GDevelop projects")) {
   var projectsPath = documentsDir + "\\GDevelop projects";
-} else {
+} else
+{
+  
   var projectsPath = "\\Path not found";
   dialog
     .showMessageBox(WIN, options)
@@ -39,11 +45,10 @@ if (fs.existsSync(documentsDir + "/GDevelop projects")) {
           if (err) {
             return console.error(err);
           }
-          // <Alert
-          //text= "Yes"
-          ///>
+
           console.log("GDevelop projects created successfully!");
         });
+        var projectsPath = documentsDir + "\\GDevelop projects";
         console.log("Button Clicked 'Yes'");
       }
     })
@@ -53,11 +58,44 @@ if (fs.existsSync(documentsDir + "/GDevelop projects")) {
 }
 
 export default function Home() {
+  const [state, setState] = React.useState({
+    open: true,
+    Transition: Fade,
+  });
+  function SlideTransition(props) {
+    return <Slide {...props} direction='up' />;
+  }
+
+  const handleClick = (Transition) => () => {
+    setState({
+      open: true,
+      Transition,
+    });
+  };
+
+  const handleClose = () => {
+    setState({
+      ...state,
+      open: true,
+    });
+  };
   return (
-    <PageHeader
-      title='GDevelop Projects'
-      subTitle={projectsPath}
-      icon={<SentimentVerySatisfiedIcon />}
-    />
+    (
+      <Snackbar
+        open={state.open}
+        onClose={handleClose}
+        TransitionComponent={state.Transition}
+        message='hello'
+        key={state.Transition.name}
+        onClick={handleClick(SlideTransition)}
+      />
+    ),
+    (
+      <PageHeader
+        title='GDevelop Projects'
+        subTitle={projectsPath}
+        icon={<SentimentVerySatisfiedIcon />}
+      />
+    )
   );
 }

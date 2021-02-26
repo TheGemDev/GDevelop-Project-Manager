@@ -1,27 +1,28 @@
 import React from 'react'
 import { Paper, Card, Typography, makeStyles, Button } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        backgroundColor: '#fdfdff'
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#e9e5df",
+    //#fdfdff
+  },
+  pageHeader: {
+    padding: theme.spacing(4),
+    display: "flex",
+    marginBottom: theme.spacing(2),
+  },
+  pageIcon: {
+    display: "inline-block",
+    padding: theme.spacing(2),
+    color: "#3c44b1",
+  },
+  pageTitle: {
+    paddingLeft: theme.spacing(4),
+    "& .MuiTypography-subtitle2": {
+      opacity: "0.6",
     },
-    pageHeader:{
-        padding:theme.spacing(4),
-        display:'flex',
-        marginBottom:theme.spacing(2)
-    },
-    pageIcon:{
-        display:'inline-block',
-        padding:theme.spacing(2),
-        color:'#3c44b1'
-    },
-    pageTitle:{
-        paddingLeft:theme.spacing(4),
-        '& .MuiTypography-subtitle2':{
-            opacity:'0.6'
-        }
-    }
-}))
+  },
+}));
 
 export default function PageHeader(props) {
 

@@ -6,26 +6,26 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        backgroundColor: '#fff',
-        
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#fdfdff",
+  },
+  title: {
+    color: "#757575",
+  },
+  searchInput: {
+    opacity: "0.6",
+    padding: `0px ${theme.spacing(1)}px`,
+    fontSize: "0.8rem",
+    "&:hover": {
+      backgroundColor: "#f2f2f2",
+      //#f3f2ef
     },
-    title: {
-      color : '#757575',
+    "& .MuiSvgIcon-root": {
+      marginRight: theme.spacing(1),
     },
-    searchInput: {
-        opacity: '0.6',
-        padding: `0px ${theme.spacing(1)}px`,
-        fontSize: '0.8rem',
-        '&:hover': {
-            backgroundColor: '#f2f2f2'
-        },
-        '& .MuiSvgIcon-root': {
-            marginRight: theme.spacing(1)
-        }
-    }
-}))
+  },
+}));
 
 export default function Header(props) {
 
