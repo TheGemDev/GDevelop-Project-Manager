@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { AppBar, Toolbar, Grid, InputBase, IconButton, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-
+import Popup from './Popup'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props) {
-
+    const [openPopup, setOpenPopup] = useState(false)
     const classes = useStyles();
-    const { title } = props;
+    const { title, searchPlaceholder} = props;
     return (
         <AppBar position="static" className={classes.root}>
             <Toolbar>
@@ -50,7 +50,7 @@ export default function Header(props) {
                         />
                     </Grid>
                     <Grid item>
-                        <IconButton>
+                        <IconButton onClick={() => {setOpenPopup(true)}}>
                           <Tooltip title='Create a new Project'>
                             <AddIcon />
                           </Tooltip>
@@ -58,6 +58,15 @@ export default function Header(props) {
                     </Grid>
                 </Grid>
             </Toolbar>
+            <Popup
+        title="Create A New Project"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        no="Cancel"
+        yes="Create"
+      >
+        </Popup>
         </AppBar>
+        
     )
 }

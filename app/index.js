@@ -3,8 +3,6 @@ const {
   BrowserWindow,
   Menu,
   shell,
-  ipcMain,
-  ipcRenderer,
   dialog,
 } = require("electron");
 const { is } = require("electron-util");
@@ -13,6 +11,7 @@ const path = require("path");
 
 //get projectsPath to documents folder
 var documentsDir = app.getPath("documents");
+
 
 const isMac = process.platform === "darwin";
 
@@ -29,7 +28,7 @@ function createWindow() {
       devTools: is.development,
       nodeIntegration: true,
       enableRemoteModule: true,
-      preload: path.join(__dirname, "preload.js"),
+      //preload: path.join(__dirname, "preload.js"),
     },
   });
 
