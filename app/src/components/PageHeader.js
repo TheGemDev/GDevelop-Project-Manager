@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PageHeader(props) {
   const classes = useStyles();
-  const { title, subTitle, icon } = props;
+  const { title, subTitle, icon, openexternal } = props;
   return (
     <Paper elevation={0} square className={classes.root}>
       <div className={classes.pageHeader}>
@@ -46,7 +46,7 @@ export default function PageHeader(props) {
           </Typography>
 
           <Typography variant="subtitle2" component="div">
-            <IconButton >
+            <IconButton onClick={openexternal}> 
               <Icon.FolderIcon />
             </IconButton>
             {subTitle}

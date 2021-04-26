@@ -7,14 +7,18 @@ import {
   IconButton,
   makeStyles,
   DialogContent,
+
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Menu";
 import Tooltip from "@material-ui/core/Tooltip";
+import HelpIcon from "@material-ui/icons/Help"
+
 import Typography from "@material-ui/core/Typography";
 import Popup from "./Popup";
-import Forme from "../util/Form";
+import FormContent from "../util/Form"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,14 +80,15 @@ export default function Header(props) {
         </Grid>
       </Toolbar>
       <Popup
-        title="Create A New Project"
+        title="Create New Project"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
+        help={<HelpIcon />}
         no="Cancel"
         yes="Create"
-        children={function ss() {
-          return <Typography variant="h2">Hello</Typography>;
-        }}
+        
+
+        children={<FormContent />}
       ></Popup>
     </AppBar>
   );
