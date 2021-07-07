@@ -9,6 +9,10 @@ import {
 } from "@material-ui/core";
 import FileIcon from "@material-ui/icons/Folder";
 import Icon from "./Icons/Icons";
+import optionalRequire from "../util/OptionalRequire";
+import requirePath from "../util/requirePath";
+
+const  shell  = optionalRequire("electron")
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PageHeader(props) {
   const classes = useStyles();
-  const { title, subTitle, icon, openexternal } = props;
+  const { title, subTitle, icon } = props;
   return (
     <Paper elevation={0} square className={classes.root}>
       <div className={classes.pageHeader}>
@@ -46,7 +50,7 @@ export default function PageHeader(props) {
           </Typography>
 
           <Typography variant="subtitle2" component="div">
-            <IconButton onClick={openexternal}> 
+            <IconButton onClick={() => {shell.openPath(requirePath.docDir)}}> 
               <Icon.FolderIcon />
             </IconButton>
             {subTitle}

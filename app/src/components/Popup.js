@@ -44,9 +44,11 @@ export default function Popup(props) {
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
+        
       <Button color="primary" disableElevation >
           {help}
         </Button>
+        <div style={{flex: '1 0 0'}} />
         <Button onClick={() => setOpenPopup(false)} color="primary">
           {no}
         </Button>

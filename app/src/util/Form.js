@@ -15,6 +15,10 @@ import {
   FormControl,
 } from "@material-ui/core";
 import requirePath from "./requirePath";
+import optionalRequire from "./OptionalRequire";
+
+const shell = optionalRequire("electron")
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +61,7 @@ export default function FormContent() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton onClick={() => {shell.openPath(requirePath.docDir)}} >
                     <Icon.FolderIcon />
                   </IconButton>
                 </InputAdornment>
@@ -73,6 +77,8 @@ export default function FormContent() {
             label="Author (Your name or brand name)"
             type=""
             fullWidth
+            autoCorrect="false"
+            spellCheck="false"
           />
         </div>
         <div className={classes.root}>

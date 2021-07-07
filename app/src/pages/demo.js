@@ -7,7 +7,7 @@ import Slide from "@material-ui/core/Slide";
 import gd from "../res/favicon-256.png";
 
 const electron = optionalRequire("electron");
-const app = electron ? electron.remote.app : null;
+const app = electron ? electron.remote.app : nulsl;
 const fs = optionalRequire("fs");
 const path = optionalRequire("path");
 const documentsDir = app ? app.getPath("documents") : null;

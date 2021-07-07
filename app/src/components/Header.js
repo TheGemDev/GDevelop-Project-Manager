@@ -13,7 +13,7 @@ import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Menu";
 import Tooltip from "@material-ui/core/Tooltip";
-import HelpIcon from "@material-ui/icons/Help"
+import HelpIcon from "@material-ui/icons/HelpOutline"
 
 import Typography from "@material-ui/core/Typography";
 import Popup from "./Popup";
